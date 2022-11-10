@@ -1,9 +1,8 @@
 import React from "react";
 import Slider from "react-slick";
 
-const Carousel = (props) => {
-  console.log(props, "props");
-
+const Carousel = ({ data }) => {
+  console.log(data);
   const settings = {
     dots: false,
     arrows: false,
@@ -32,7 +31,13 @@ const Carousel = (props) => {
   return (
     <div>
       <Slider className="slider" {...settings}>
-        <p>Haiiii</p>
+        {data.slice(4).map((item, i) => {
+          return (
+            <div>
+              <img src={item.url} alt="img" />
+            </div>
+          );
+        })}
       </Slider>
     </div>
   );

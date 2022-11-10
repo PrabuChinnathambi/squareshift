@@ -4,7 +4,7 @@ import Carousel from "./Carousel";
 
 const Home = () => {
   const [userData, setUserData] = useState([]);
-  const [currentID, setCurrentID] = useState();
+  const [currentData, setCurrentData] = useState();
 
   const getUserDetails = async () => {
     const { data: userData } = await axios.get(
@@ -15,27 +15,28 @@ const Home = () => {
     );
 
     if (imagesData && userData) {
+      var imagedata = {};
+      var array1 = [];
       userData.map((item, i) => {
-        var value = imagesData.filter((x) => x.id === item.id);
-        if (value) {
-          let final = { ...item, ...value };
-          console.log(final, "final");
-          setUserData([...userData, final]);
-        }
+        var value = imagesData.filter((x) => x.albumId === item.id);
+        imagedata["images"] = [...value];
+        let final = { ...item, ...imagedata };
+        array1.push(final);
       });
     }
+    setUserData(array1);
   };
 
   useEffect(() => {
     getUserDetails();
-  }, [currentID]);
+  }, []);
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     var data = userData.find((x) => x.id == e.target.value);
-    console.log(data);
-    setCurrentID(data);
+    setCurrentData(data);
   };
+
+  console.log(userData, "userData");
 
   return (
     <div>
@@ -45,7 +46,7 @@ const Home = () => {
           return <option value={item.id}>{item.name}</option>;
         })}
       </select>
-      <Carousel data={currentID} />
+      <Carousel data={currentData?.images} />
     </div>
   );
 };
