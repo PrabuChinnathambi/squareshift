@@ -36,16 +36,20 @@ const Home = () => {
     setCurrentData(data);
   };
 
-  console.log(userData, "userData");
-
   return (
     <div>
-      <select onChange={handleChange}>
-        <option>Select User</option>
-        {userData.map((item, i) => {
-          return <option value={item.id}>{item.name}</option>;
-        })}
-      </select>
+      <div className="select">
+        <select onChange={handleChange}>
+          <option>Select User</option>
+          {userData.map((item, i) => {
+            return (
+              <option key={i} value={item.id}>
+                {item.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       <Carousel data={currentData?.images} />
     </div>
   );
